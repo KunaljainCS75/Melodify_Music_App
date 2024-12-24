@@ -1,0 +1,28 @@
+buildscript {
+    repositories {
+        google() // For Android-related dependencies
+        mavenCentral() // For Kotlin and other dependencies
+    }
+    ext.kotlin_version = "1.8.20" // Use the desired version
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+subprojects {
+    project.evaluationDependsOn(":app")
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
